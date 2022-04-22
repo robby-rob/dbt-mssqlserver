@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.9.7-slim-buster
+ARG BASE_IMAGE=python:3.9.12-slim-buster
 
 # Download stage
 FROM $BASE_IMAGE AS download_stage
