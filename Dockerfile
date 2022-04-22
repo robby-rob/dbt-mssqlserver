@@ -18,7 +18,7 @@ RUN RELEASE_DIST=$(lsb_release -is | awk '{print tolower($0)}') \
 	&& apt-get update \
 	&& apt-get download msodbcsql17=$MSODBCSQL17 \
 	&& apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #> Azure CLI
 #ARG AZURE_CLI=2.30.0
 #RUN AZ_REPO=$(lsb_release -cs) \
@@ -37,7 +37,7 @@ RUN apt-get update \
 		gcc \
 		unixodbc-dev \
 	&& apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 	&& python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 #> DBT with SQL Server support
@@ -56,7 +56,7 @@ RUN apt-get update \
 		git \
 		bash-completion \
 	&& apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 	&& python3 -m venv /opt/venv
 #TODO: ADD root password
 #TODO: ADD appuser group & user
@@ -68,7 +68,7 @@ RUN apt-get update \
 	&& ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
 		/tmp/msodbcsql17*.deb \
 	&& apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #> Azure CLI
 #COPY --from=download_stage /downloads/azure-cli*.deb /tmp
 #RUN apt-get update \
