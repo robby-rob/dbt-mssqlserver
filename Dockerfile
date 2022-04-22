@@ -22,10 +22,10 @@ RUN RELEASE_DIST=$(lsb_release -is | awk '{print tolower($0)}') \
 #> Azure CLI
 #ARG AZURE_CLI=2.30.0
 #RUN AZ_REPO=$(lsb_release -cs) \
-#	&& echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
-#	&& apt-get update \
-#	&& AZURECLI=${AZURE_CLI}-1~${AZ_REPO} \
-#	&& apt-get download azure-cli=$AZURECLI
+#  && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
+#  && apt-get update \
+#  && AZURECLI=${AZURE_CLI}-1~${AZ_REPO} \
+#  && apt-get download azure-cli=$AZURECLI
 #> DBT Bash Autocompletion
 RUN curl https://raw.githubusercontent.com/fishtown-analytics/dbt-completion.bash/master/dbt-completion.bash > ./dbt-completion.bash
 
@@ -72,10 +72,10 @@ RUN apt-get update \
 #> Azure CLI
 #COPY --from=download_stage /downloads/azure-cli*.deb /tmp
 #RUN apt-get update \
-#	&& apt-get install -y --no-install-recommends \
-#		/tmp/azure-cli*.deb \
-#	&& rm -rf ./azure-cli \
-#	&& apt-get clean \
+#  && apt-get install -y --no-install-recommends \
+#    /tmp/azure-cli*.deb \
+#  && rm -rf ./azure-cli \
+#  && apt-get clean \
 #   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #> Python venv
 COPY --from=python_stage /opt/venv /opt/venv
