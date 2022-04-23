@@ -11,12 +11,13 @@ RUN apt-get update \
     lsb-release \
   && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 #> SQL Server ODBC driver
-ARG MSODBCSQL17=17.8.1.1-1
+ARG MSODBCSQL_PACKAGE=msodbcsql17
+ARG MSODBCSQL_RELEASE=17.8.1.1-1
 RUN RELEASE_DIST=$(lsb_release -is | awk '{print tolower($0)}') \
   && RELEASE_VER=$(lsb_release -rs) \
   && curl https://packages.microsoft.com/config/$RELEASE_DIST/$RELEASE_VER/prod.list > /etc/apt/sources.list.d/mssql-release.list \
   && apt-get update \
-  && apt-get download msodbcsql17=$MSODBCSQL17 \
+  && apt-get download $MSODBCSQL_PACKAGE=$MSODBCSQL_RELEASE \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #> Azure CLI
@@ -62,11 +63,11 @@ RUN apt-get update \
 #TODO: ADD appuser group & user
 ENV PATH="/opt/venv/bin:$PATH"
 #> SQL Server ODBC driver
-COPY --from=download_stage /downloads/msodbcsql17* /tmp
+COPY --from=download_stage /downloads/$MSODBCSQL_PACKAGE* /tmp
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
-    /tmp/msodbcsql17*.deb \
+    /tmp/$MSODBCSQL_PACKAGE*.deb \
   && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #> Azure CLI
