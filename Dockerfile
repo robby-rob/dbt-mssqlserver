@@ -1,6 +1,7 @@
 # 1. Download stage
 # 1.1. Base
-ARG BASE_IMAGE=python:3.9.12-slim-buster
+#ARG BASE_IMAGE=python:3.9.12-slim-buster
+ARG BASE_IMAGE=python:3.9.12-slim-bullseye
 FROM $BASE_IMAGE AS download_stage
 WORKDIR /downloads
 RUN apt-get update \
@@ -12,8 +13,10 @@ RUN apt-get update \
   && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
 # 1.2. SQL Server ODBC driver
-ARG MSODBCSQL_PACKAGE=msodbcsql17
-ARG MSODBCSQL_RELEASE=17.8.1.1-1
+#ARG MSODBCSQL_PACKAGE=msodbcsql17
+#ARG MSODBCSQL_RELEASE=17.8.1.1-1
+ARG MSODBCSQL_PACKAGE=msodbcsql18
+ARG MSODBCSQL_RELEASE=18.0.1.1-1
 RUN RELEASE_DIST=$(lsb_release -is | awk '{print tolower($0)}') \
   && RELEASE_VER=$(lsb_release -rs) \
   && curl https://packages.microsoft.com/config/$RELEASE_DIST/$RELEASE_VER/prod.list > /etc/apt/sources.list.d/mssql-release.list \
